@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -24,7 +24,9 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ book['title'] }}</h5>
                   <p class="card-text">{{ book['author'] }}</p>
-                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                  {% if book['book_path'] %}
+                    <p class="card-text"><a href="{{ book['book_path'] }}" target="blank_">Читать</a></p>
+                  {% endif %}
                 </div>
               </div>
             </div>
