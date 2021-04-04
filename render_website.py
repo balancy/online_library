@@ -1,13 +1,13 @@
 import json
-from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2 import Template
+from livereload import Server
 
 
 def read_library_info():
-    """
+    """Read library info from json file.
 
-    :return:
+    :return: list of all books from json file
     """
 
     with open("library.json", "r", encoding="utf-8") as file:
@@ -16,20 +16,23 @@ def read_library_info():
     return library
 
 
-if __name__ == "__main__":
-    env = Environment(
-        loader=FileSystemLoader('.'),
-        autoescape=select_autoescape(['html', 'xml'])
-    )
+def rebuild():
+    """Rebuild index.html every time template.html is changed."""
 
-    template = env.get_template('template.html')
+    template = Template(open("template.html").read())
 
     rendered_page = template.render(
         library=read_library_info(),
     )
 
-    with open('index.html', 'w', encoding="utf8") as file:
+    with open("index.html", "w", encoding="utf8") as file:
         file.write(rendered_page)
 
-    server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
-    server.serve_forever()
+
+if __name__ == "__main__":
+    rebuild()
+
+    server = Server()
+    server.watch('template.html', rebuild)
+
+    server.serve(root='.')
