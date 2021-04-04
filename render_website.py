@@ -25,13 +25,16 @@ def rebuild(template):
     """
 
     library_chunked = read_library_info()
+    number_of_pages = len(library_chunked)
 
     for chunk_number, library_piece in enumerate(library_chunked):
         rendered_page = template.render(
             library=library_piece,
+            current_page_number=chunk_number+1,
+            number_of_pages=number_of_pages,
         )
 
-        with open(f"pages/index{chunk_number}.html", "w", encoding="utf-8") as file:
+        with open(f"pages/index{chunk_number+1}.html", "w", encoding="utf-8") as file:
             file.write(rendered_page)
 
 
@@ -54,4 +57,4 @@ if __name__ == "__main__":
     server = Server()
     server.watch("template.html", rebuild)
 
-    server.serve(root='pages', default_filename="index0.html")
+    server.serve(root='pages', default_filename="index1.html")
