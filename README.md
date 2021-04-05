@@ -2,7 +2,8 @@
 
 ![library.png](https://i.ibb.co/2ZYD5Gf/library.png)
 
-Application represents online library representing science fiction books in Russian.
+Application represents online library representing science fiction books in Russian. 
+Web-version is available via `https://balancy.github.io/online_library`. 
 
 ## How to install
 Python3 and Git should be already installed. 
