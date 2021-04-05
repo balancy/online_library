@@ -1,6 +1,6 @@
 # Online SciFi library
 
-[![library.png](https://i.ibb.co/2ZYD5Gf/library.png)
+![library.png](https://i.ibb.co/2ZYD5Gf/library.png)
 
 Application represents online library representing science fiction books in Russian.
 
