@@ -12,8 +12,12 @@ def read_library_info():
     :return: list of all books from json file
     """
 
-    with open("library.json", "r", encoding="utf-8") as file:
+    with open("library_.json", "r", encoding="utf-8") as file:
         library = json.load(file)
+
+    for book in library:
+        book["img_src"] = f"/{book['img_src']}"
+        book["book_path"] = f"/{book['book_path']}"
 
     return list(sliced(library, 20))
 
@@ -27,14 +31,14 @@ def rebuild(template):
     library_chunked = read_library_info()
     number_of_pages = len(library_chunked)
 
-    for chunk_number, library_piece in enumerate(library_chunked):
+    for chunk_number, library_piece in enumerate(library_chunked, start=1):
         rendered_page = template.render(
             library=library_piece,
-            current_page_number=chunk_number+1,
+            current_page_number=chunk_number,
             number_of_pages=number_of_pages,
         )
 
-        with open(f"pages/index{chunk_number+1}.html", "w", encoding="utf-8") as file:
+        with open(f"pages/index{chunk_number}.html", "w", encoding="utf-8") as file:
             file.write(rendered_page)
 
 
@@ -48,8 +52,8 @@ if __name__ == "__main__":
             )
     )
 
-    os.makedirs("pages/books/", exist_ok=True)
-    os.makedirs("pages/images/", exist_ok=True)
+    os.makedirs("media/books/", exist_ok=True)
+    os.makedirs("media/images/", exist_ok=True)
 
     template = env.get_template("template.html")
     rebuild(template)
@@ -57,4 +61,4 @@ if __name__ == "__main__":
     server = Server()
     server.watch("template.html", rebuild)
 
-    server.serve(root='pages', default_filename="index1.html")
+    server.serve(root='.', default_filename="pages/index1.html")
