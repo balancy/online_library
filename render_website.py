@@ -16,8 +16,8 @@ def read_library_info():
         library = json.load(file)
 
     for book in library:
-        book["img_src"] = f"/{book['img_src']}"
-        book["book_path"] = f"/{book['book_path']}"
+        book["img_src"] = f"../{book['img_src']}"
+        book["book_path"] = f"../{book['book_path']}"
 
     return list(sliced(library, 20))
 
